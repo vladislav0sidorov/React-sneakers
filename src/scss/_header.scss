@@ -1,0 +1,80 @@
+.header {
+  padding: 0 0 45px 0;
+  border-bottom: 1px solid #eaeaea;
+  &__container {
+  }
+  &__body {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.body-header {
+  &__logo {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    img {
+      margin: 0 16px 0 0;
+      height: 40px;
+      width: 40px;
+    }
+  }
+  &__text {
+  }
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+
+  &__about {
+    font-size: 14px;
+    line-height: 17px;
+
+    color: #9d9d9d;
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+  }
+
+  &__items-cart {
+    cursor: pointer;
+    margin: 0 30px 0 0;
+    display: flex;
+    align-items: center;
+    svg {
+      width: 21px;
+      height: 21px;
+      margin: 0 10px 0 0;
+    }
+    span {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: #5c5c5c;
+    }
+    span:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__items-likes {
+    margin: 0 30px 0 0;
+    svg {
+      width: 21px;
+      height: 21px;
+    }
+    display: flex;
+    align-items: center;
+  }
+
+  &__items-profile {
+    svg {
+      width: 21px;
+      height: 21px;
+    }
+  }
+}

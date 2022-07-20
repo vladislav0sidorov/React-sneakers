@@ -1,0 +1,252 @@
+@charset "UTF-8";
+/*Обнуление*/
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus, :active {
+  outline: none;
+}
+
+a:focus, a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*--------------------*/
+.header {
+  padding: 0 0 45px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+.header__body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.body-header__logo {
+  display: flex;
+  align-items: center;
+}
+.body-header__logo img {
+  margin: 0 16px 0 0;
+  height: 40px;
+  width: 40px;
+}
+.body-header__title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+.body-header__about {
+  font-size: 14px;
+  line-height: 17px;
+  color: #9d9d9d;
+}
+.body-header__items {
+  display: flex;
+  align-items: center;
+}
+.body-header__items-cart {
+  margin: 0 30px 0 0;
+  display: flex;
+  align-items: center;
+}
+.body-header__items-cart svg {
+  width: 21px;
+  height: 21px;
+  margin: 0 10px 0 0;
+}
+.body-header__items-cart span {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5c5c5c;
+}
+.body-header__items-likes {
+  margin: 0 30px 0 0;
+  display: flex;
+  align-items: center;
+}
+.body-header__items-likes svg {
+  width: 21px;
+  height: 21px;
+}
+.body-header__items-profile svg {
+  width: 21px;
+  height: 21px;
+}
+
+.main {
+  padding: 45px 0 0 0;
+}
+
+.hero__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.body-hero__title h1 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 39px;
+}
+.body-hero__search input {
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  padding: 14px 18px 14px 46px;
+  background: url("../assets/img/hero/search.svg") 18px center no-repeat;
+}
+.body-hero__search input:hover {
+  border: 1px solid #dadada;
+}
+.body-hero__search input:focus {
+  border: 1px solid #bcbcbc;
+}
+
+.sneakers {
+  padding: 40px 0 0 0;
+}
+.sneakers__gird {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-row-gap: 50px;
+  grid-column-gap: 40px;
+}
+.item-sneakers {
+  border: 1px solid #f3f3f3;
+  border-radius: 40px;
+  padding: 20px 30px 34px 30px;
+  transition: 0.2s all ease;
+}
+.item-sneakers__image {
+  position: relative;
+  padding: 0 0 84% 0;
+  overflow: hidden;
+  margin: 0 0 14px 0;
+}
+.item-sneakers__image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.item-sneakers__title {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: 400;
+  margin: 0 0 14px 0;
+}
+.item-sneakers__about {
+  display: flex;
+  justify-content: space-between;
+}
+.item-sneakers__text {
+  margin: 0 0 2px 0;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  text-transform: uppercase;
+  color: #bdbdbd;
+}
+.item-sneakers__price {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+.item-sneakers__button {
+  height: 32px;
+  width: 32px;
+  border-radius: 8px;
+}
+
+.item-sneakers:hover {
+  box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #e7f6ff;
+}
+
+[class*=__container] {
+  max-width: 972px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1030px;
+  background: #ffffff;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+}
+
+.wrapper-container {
+  margin: 25px;
+  padding: 45px 0;
+}

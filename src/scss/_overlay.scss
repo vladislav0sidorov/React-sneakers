@@ -1,0 +1,124 @@
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  &-drawer {
+    position: absolute;
+    width: 385px;
+    height: 100%;
+    right: 0;
+    background: #ffffff;
+    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+  }
+  &-container {
+    max-width: 325px;
+    margin: 0 auto;
+  }
+}
+.overlay-column__row {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 32px 0;
+}
+.overlay-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 32px 0;
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+  }
+  img {
+    cursor: pointer;
+  }
+}
+.overlay__items {
+  margin: 0 0 32px 0;
+  flex: 1 1 auto;
+}
+.item-overlay {
+  background: #ffffff;
+  border: 1px solid #f3f3f3;
+  border-radius: 20px;
+  margin: 0 0 24px 0;
+  .item-overlay:last-child {
+    margin-bottom: 0;
+  }
+  &__row {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  &__image {
+    margin: 0 22px 0 0;
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  &__body {
+    max-width: 150px;
+    margin: 0 12px 0 0;
+    &_title {
+      h4 {
+        font-size: 14px;
+        line-height: 17px;
+        margin: 0 0 8px 0;
+      }
+      p {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+  }
+  &__delete-btn {
+  }
+}
+.overlay-price {
+  &__body {
+  }
+  &__sum {
+    ul {
+      margin: 0 0 24px 0;
+      li {
+        display: flex;
+        margin: 0 0 20px 0;
+      }
+    }
+  }
+  &__dashed {
+    flex: 1 1;
+    border-bottom: 1px dashed #dfdfdf;
+    top: -4px;
+    margin: 0 7px;
+  }
+  &__green-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    padding: 18px 0;
+    width: 100%;
+    color: #ffffff;
+    background: #9dd558;
+    border-radius: 18px;
+    justify-content: center;
+    img {
+      position: absolute;
+      right: 35px;
+    }
+  }
+}
