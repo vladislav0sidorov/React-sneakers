@@ -83,6 +83,7 @@
     }
   }
   &__delete-btn {
+    cursor: pointer;
   }
 }
 .overlay-price {
@@ -119,6 +120,46 @@
     img {
       position: absolute;
       right: 35px;
+    }
+  }
+}
+//=========================//
+.overlay-body {
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__title {
+    margin: 0 0 12px 0;
+    h3 {
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 27px;
+    }
+  }
+  &__text {
+    margin: 0 0 40px 0;
+    width: 80%;
+    p {
+      font-size: 16px;
+      line-height: 24px;
+      opacity: 0.4;
+    }
+  }
+  &__image {
+    margin: 0 0 22px 0;
+    img {
+    }
+  }
+  &__back-button {
+    width: 80%;
+    img {
+      left: 25px;
+      transform: rotate(180deg);
     }
   }
 }

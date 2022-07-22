@@ -1,7 +1,8 @@
 import React from 'react';
+
 import Logo from '../assets/img/header/logo.png';
 
-export const Header = (props) => {
+export const Header = ({ openCart }) => {
   return (
     <header className="header">
       <div className="header__container">
@@ -14,7 +15,7 @@ export const Header = (props) => {
             </div>
           </div>
           <div className="body-header__items">
-            <div onClick={props.openCart} className="body-header__items-cart">
+            <div onClick={openCart} className="body-header__items-cart">
               <svg
                 width="20"
                 height="20"
