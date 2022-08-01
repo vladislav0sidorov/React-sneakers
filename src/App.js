@@ -1,30 +1,57 @@
 import React from 'react';
 import axios from 'axios'
+import { Routes, Route } from 'react-router-dom';
 
+import Home from './pages/Home'
+import Favorites from './pages/Favorites';
 
-import { Card } from './components/Card';
 import { Drawer } from './components/Drawer';
 import { Header } from './components/Header';
-import DeleteButton from './assets/img/hero/delete-btn.svg';
+
+//! Есть проблема с удалением кроссвок из корзины (некоректно)
+
+const AppContext = React.createContext({})
 
 function App() {
   const [sneakers, setSneakers] = React.useState([]);
+  const [sneakersInFavorites, setSneakersInFavorites] = React.useState([]);
   const [sneakersInCart, setSneakersInCart] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
   const [changeSearchValue, setChangeSearchValue] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
-    axios.get('https://62d50aded4406e523551779b.mockapi.io/sneakers').then((res) => {
-      setSneakers(res.data)
-    })
-    axios.get('https://62d50aded4406e523551779b.mockapi.io/cart').then((res) => {
-      setSneakersInCart(res.data)
-    })
+    async function fetchData() {
+      const sneakersResponse = await axios.get('https://62d50aded4406e523551779b.mockapi.io/sneakers');
+      const favoritesResponse = await axios.get('https://62d50aded4406e523551779b.mockapi.io/favorites');
+      const cartResponse = await axios.get('https://62d50aded4406e523551779b.mockapi.io/cart');
+
+      setIsLoading(false)
+      setSneakersInFavorites(favoritesResponse.data)
+      setSneakersInCart(cartResponse.data)
+      setSneakers(sneakersResponse.data)
+    }
+    fetchData()
   }, [])
 
+
   const onAdditemToCart = (objSneakersToCart) => {
-    axios.post('https://62d50aded4406e523551779b.mockapi.io/cart', objSneakersToCart);
-    (setSneakersInCart((prev) => [...prev, objSneakersToCart]))
+    if (sneakersInCart.find((cartObj) => cartObj.id === objSneakersToCart.id)) {
+      axios.delete(`https://62d50aded4406e523551779b.mockapi.io/cart/${objSneakersToCart.id}`);
+      setSneakersInCart((prev) => prev.filter((cartObj) => cartObj.id !== objSneakersToCart.id))
+    } else {
+      axios.post('https://62d50aded4406e523551779b.mockapi.io/cart', objSneakersToCart);
+      (setSneakersInCart((prev) => [...prev, objSneakersToCart]))
+    }
+  }
+
+  const onAdditemToFavorites = (objSneakersToFavorites) => {
+    if (sneakersInFavorites.find((favoritesObj) => favoritesObj.id === objSneakersToFavorites.id)) {
+      axios.delete(`https://62d50aded4406e523551779b.mockapi.io/favorites/${objSneakersToFavorites.id}`);
+    } else {
+      axios.post('https://62d50aded4406e523551779b.mockapi.io/favorites', objSneakersToFavorites);
+      (setSneakersInFavorites((prev) => [...prev, objSneakersToFavorites]))
+    }
   }
 
   const onDeleteItemInCart = (id) => {
@@ -37,43 +64,33 @@ function App() {
   }
 
   return (
+    <AppContext.Provider>
+      <div className="wrapper" >
+        <div className="wrapper-container">
+          {cartOpened && <Drawer sneakersInCart={sneakersInCart} closeCart={() => setCartOpened(false)} onDeleteItemInCart={onDeleteItemInCart} />}
 
-    <div className="wrapper" >
-      <div className="wrapper-container">
-        {cartOpened && <Drawer sneakersInCart={sneakersInCart} closeCart={() => setCartOpened(false)} onDeleteItemInCart={onDeleteItemInCart} />}
-        <Header openCart={() => setCartOpened(true)} />
-        <main className="main">
-          <section className="hero">
-            <div className="hero__container">
-              <div className="hero__body">
-                <div className="body-hero__title">
-                  <h1>{changeSearchValue ? `Поиск по запросу "${changeSearchValue}"` : "Все кроссовки"}</h1>
-                </div>
-                <div className="body-hero__search">
-                  <input onChange={onChangeSearchValue} value={changeSearchValue} type="text" placeholder="Поиск" />
-                  {changeSearchValue && <img className="body-hero__search-delete" onClick={() => { setChangeSearchValue('') }} src={DeleteButton} alt="DeleteButton" />}
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="sneakers">
-            <div className="sneakers__container">
-              <div className="sneakers__gird">
-                {sneakers
-                  .filter((objSneakers) => objSneakers.title.toLowerCase().includes(changeSearchValue.toLowerCase()))
-                  .map((objSneakers) => (
-                    <Card
-                      key={objSneakers.id}
-                      {...objSneakers}
-                      addSneakersToCart={(objSneakersToCart) => onAdditemToCart(objSneakersToCart)}
-                    />
-                  ))}
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-    </div >
+          <Header openCart={() => setCartOpened(true)} />
+
+          <Routes>
+            <Route path='/' element={<Home
+              sneakersInCart={sneakersInCart}
+              changeSearchValue={changeSearchValue}
+              onChangeSearchValue={onChangeSearchValue}
+              sneakers={sneakers}
+              onAdditemToCart={onAdditemToCart}
+              setChangeSearchValue={setChangeSearchValue}
+              onAdditemToFavorites={onAdditemToFavorites}
+              isLoading={isLoading}
+            />} />
+            <Route path='favorites' element={<Favorites
+              sneakersInFavorites={sneakersInFavorites}
+              onAdditemToFavorites={onAdditemToFavorites}
+              onAdditemToCart={onAdditemToCart}
+            />} />
+          </Routes>
+        </div>
+      </div >
+    </AppContext.Provider>
   );
 }
 

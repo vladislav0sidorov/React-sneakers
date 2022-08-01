@@ -22,7 +22,7 @@ export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) =
               <>
                 <div className="overlay__items ">
                   {sneakersInCart.map((objSneakersInCart) => (
-                    <div className="item-overlay">
+                    <div key={objSneakersInCart.id} className="item-overlay">
                       <div className="item-overlay__row">
                         <div className="item-overlay__image">
                           <img src={objSneakersInCart.imageUrl} alt="Sneakers" />

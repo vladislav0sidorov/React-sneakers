@@ -5,12 +5,21 @@ import CheckAdded from '../../assets/img/hero/add-check.svg';
 import Like from '../../assets/img/hero/like-btn.svg';
 import CheckLike from '../../assets/img/hero/like-select-btn.svg';
 
-export const Card = ({ id, price, title, imageUrl, addSneakersToCart, addSneakersToLikes }) => {
-  const [isAdded, setIsAdded] = React.useState(false);
-  const [isLike, setIsLike] = React.useState(false);
+const Card = ({
+  id,
+  price,
+  title,
+  imageUrl,
+  addSneakersToCart,
+  additemToFavorites,
+  favorited = false,
+  wasAddedInCart,
+}) => {
+  const [isAdded, setIsAdded] = React.useState(wasAddedInCart);
+  const [isLike, setIsLike] = React.useState(favorited);
 
-  const clickToLike = () => {
-    addSneakersToLikes({ price, title, imageUrl, id });
+  const clickToFavorites = () => {
+    additemToFavorites({ price, title, imageUrl, id });
     setIsLike(!isLike);
   };
 
@@ -23,7 +32,7 @@ export const Card = ({ id, price, title, imageUrl, addSneakersToCart, addSneaker
     <div className="item-sneakers">
       <img
         className="item-sneakers__button-like"
-        onClick={clickToLike}
+        onClick={clickToFavorites}
         src={isLike ? CheckLike : Like}
         alt="Like"
       />
@@ -43,3 +52,5 @@ export const Card = ({ id, price, title, imageUrl, addSneakersToCart, addSneaker
     </div>
   );
 };
+
+export default Card;
