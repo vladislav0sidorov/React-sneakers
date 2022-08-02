@@ -63,10 +63,15 @@ function App() {
     setChangeSearchValue(event.target.value);
   }
 
+  const offScroll = (document.body.style.overflow = 'hidden')
+
+
+
   return (
     <AppContext.Provider>
       <div className="wrapper" >
         <div className="wrapper-container">
+
           {cartOpened && <Drawer sneakersInCart={sneakersInCart} closeCart={() => setCartOpened(false)} onDeleteItemInCart={onDeleteItemInCart} />}
 
           <Header openCart={() => setCartOpened(true)} />
