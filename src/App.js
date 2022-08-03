@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios'
 import { Routes, Route } from 'react-router-dom';
 
+import AppContext from './context'
+
 import Home from './pages/Home'
 import Favorites from './pages/Favorites';
 
@@ -10,7 +12,7 @@ import { Header } from './components/Header';
 
 //! Есть проблема с удалением кроссвок из корзины (некоректно)
 
-const AppContext = React.createContext({})
+
 
 function App() {
   const [sneakers, setSneakers] = React.useState([]);
@@ -45,6 +47,11 @@ function App() {
     }
   }
 
+  const wasAddedInCart = (id) => {
+    return sneakersInCart.some((objSneakersCart) => objSneakersCart.id === id);
+  };
+
+
   const onAdditemToFavorites = (objSneakersToFavorites) => {
     if (sneakersInFavorites.find((favoritesObj) => favoritesObj.id === objSneakersToFavorites.id)) {
       axios.delete(`https://62d50aded4406e523551779b.mockapi.io/favorites/${objSneakersToFavorites.id}`);
@@ -53,6 +60,7 @@ function App() {
       (setSneakersInFavorites((prev) => [...prev, objSneakersToFavorites]))
     }
   }
+
 
   const onDeleteItemInCart = (id) => {
     axios.delete(`https://62d50aded4406e523551779b.mockapi.io/cart/${id}`);
@@ -63,12 +71,11 @@ function App() {
     setChangeSearchValue(event.target.value);
   }
 
-  const offScroll = (document.body.style.overflow = 'hidden')
 
-
+  //const offScroll = (document.body.style.overflow = 'hidden')
 
   return (
-    <AppContext.Provider>
+    <AppContext.Provider value={{ sneakers, sneakersInFavorites, sneakersInCart, isLoading, onAdditemToFavorites, onAdditemToCart, wasAddedInCart }} >
       <div className="wrapper" >
         <div className="wrapper-container">
 
@@ -87,15 +94,11 @@ function App() {
               onAdditemToFavorites={onAdditemToFavorites}
               isLoading={isLoading}
             />} />
-            <Route path='favorites' element={<Favorites
-              sneakersInFavorites={sneakersInFavorites}
-              onAdditemToFavorites={onAdditemToFavorites}
-              onAdditemToCart={onAdditemToCart}
-            />} />
+            <Route path='favorites' element={<Favorites />} />
           </Routes>
         </div>
       </div >
-    </AppContext.Provider>
+    </AppContext.Provider >
   );
 }
 

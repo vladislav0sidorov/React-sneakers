@@ -1,7 +1,24 @@
 import React from 'react';
 import Card from '../components/Card';
+import SkeletonSneakers from '../components/Card/SkeletonSneakers';
+import AppContext from '../context';
 
-const Favorites = ({ sneakersInFavorites, onAdditemToFavorites, onAdditemToCart }) => {
+const Favorites = () => {
+  const { sneakersInFavorites, onAdditemToFavorites, onAdditemToCart, isLoading } =
+    React.useContext(AppContext);
+
+  const sneakerBlockInFavorites = sneakersInFavorites.map((objSneakersInFavorites) => (
+    <Card
+      key={objSneakersInFavorites.id}
+      {...objSneakersInFavorites}
+      addSneakersToCart={(objSneakersToCart) => onAdditemToCart(objSneakersToCart)}
+      additemToFavorites={(objSneakersToFavorites) => onAdditemToFavorites(objSneakersToFavorites)}
+      favorited={true}
+    />
+  ));
+
+  const skeletons = [...new Array(4)].map((_, index) => <SkeletonSneakers key={index} />);
+
   return (
     <main className="main">
       <section className="hero">
@@ -15,19 +32,7 @@ const Favorites = ({ sneakersInFavorites, onAdditemToFavorites, onAdditemToCart 
       </section>
       <section className="sneakers">
         <div className="sneakers__container">
-          <div className="sneakers__gird">
-            {sneakersInFavorites.map((objSneakersInFavorites) => (
-              <Card
-                key={objSneakersInFavorites.id}
-                {...objSneakersInFavorites}
-                addSneakersToCart={(objSneakersToCart) => onAdditemToCart(objSneakersToCart)}
-                additemToFavorites={(objSneakersToFavorites) =>
-                  onAdditemToFavorites(objSneakersToFavorites)
-                }
-                favorited={true}
-              />
-            ))}
-          </div>
+          <div className="sneakers__gird">{isLoading ? skeletons : sneakerBlockInFavorites}</div>
         </div>
       </section>
     </main>

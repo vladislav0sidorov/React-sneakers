@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../../context';
 
 import Added from '../../assets/img/hero/add.svg';
 import CheckAdded from '../../assets/img/hero/add-check.svg';
@@ -13,9 +14,8 @@ const Card = ({
   addSneakersToCart,
   additemToFavorites,
   favorited = false,
-  wasAddedInCart,
 }) => {
-  const [isAdded, setIsAdded] = React.useState(wasAddedInCart);
+  const { wasAddedInCart } = React.useContext(AppContext);
   const [isLike, setIsLike] = React.useState(favorited);
 
   const clickToFavorites = () => {
@@ -25,7 +25,6 @@ const Card = ({
 
   const clickToAdd = () => {
     addSneakersToCart({ price, title, imageUrl, id });
-    setIsAdded(!isAdded);
   };
 
   return (
@@ -46,7 +45,7 @@ const Card = ({
           <span className="item-sneakers__price">{price} руб. </span>
         </div>
         <div onClick={clickToAdd} className="item-sneakers__button-add  button">
-          <img src={isAdded ? CheckAdded : Added} alt="add" />
+          <img src={wasAddedInCart(id) ? CheckAdded : Added} alt="add" />
         </div>
       </div>
     </div>

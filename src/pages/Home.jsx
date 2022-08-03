@@ -27,9 +27,6 @@ const Home = ({
         additemToFavorites={(objSneakersToFavorites) =>
           onAdditemToFavorites(objSneakersToFavorites)
         }
-        wasAddedInCart={sneakersInCart.some(
-          (objSneakersCart) => objSneakersCart.id === objSneakers.id,
-        )}
       />
     ));
 
