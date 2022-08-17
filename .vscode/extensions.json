@@ -1,5 +1,6 @@
 {
   "recommendations": [
-    "MS-CEINTL.vscode-language-pack-ru"
+    "ms-ceintl.vscode-language-pack-ru",
+    "esbenp.prettier-vscode"
   ]
 }

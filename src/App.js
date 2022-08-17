@@ -36,7 +36,6 @@ function App() {
     fetchData()
   }, [])
 
-
   const onAdditemToCart = (objSneakersToCart) => {
     if (sneakersInCart.find((cartObj) => cartObj.id === objSneakersToCart.id)) {
       axios.delete(`https://62d50aded4406e523551779b.mockapi.io/cart/${objSneakersToCart.id}`);
@@ -51,16 +50,19 @@ function App() {
     return sneakersInCart.some((objSneakersCart) => objSneakersCart.id === id);
   };
 
-
   const onAdditemToFavorites = (objSneakersToFavorites) => {
     if (sneakersInFavorites.find((favoritesObj) => favoritesObj.id === objSneakersToFavorites.id)) {
       axios.delete(`https://62d50aded4406e523551779b.mockapi.io/favorites/${objSneakersToFavorites.id}`);
+      setSneakersInFavorites((prev) =>prev.filter((favoritesObj) => favoritesObj.id !== objSneakersToFavorites.id))
     } else {
       axios.post('https://62d50aded4406e523551779b.mockapi.io/favorites', objSneakersToFavorites);
       (setSneakersInFavorites((prev) => [...prev, objSneakersToFavorites]))
     }
   }
 
+  const wasAddedInFavorites = (id) => {
+    return sneakersInFavorites.some((objSneakerstFavorites) =>objSneakerstFavorites.id === id )
+  };
 
   const onDeleteItemInCart = (id) => {
     axios.delete(`https://62d50aded4406e523551779b.mockapi.io/cart/${id}`);
@@ -71,15 +73,14 @@ function App() {
     setChangeSearchValue(event.target.value);
   }
 
-
   //const offScroll = (document.body.style.overflow = 'hidden')
 
   return (
-    <AppContext.Provider value={{ sneakers, sneakersInFavorites, sneakersInCart, isLoading, onAdditemToFavorites, onAdditemToCart, wasAddedInCart }} >
+    <AppContext.Provider value={{ sneakers, sneakersInFavorites, sneakersInCart, setSneakersInCart, isLoading, onAdditemToFavorites, onAdditemToCart, wasAddedInCart, wasAddedInFavorites }} >
       <div className="wrapper" >
         <div className="wrapper-container">
 
-          {cartOpened && <Drawer sneakersInCart={sneakersInCart} closeCart={() => setCartOpened(false)} onDeleteItemInCart={onDeleteItemInCart} />}
+          {cartOpened && <Drawer closeCart={() => setCartOpened(false)} onDeleteItemInCart={onDeleteItemInCart} />}
 
           <Header openCart={() => setCartOpened(true)} />
 

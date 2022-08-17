@@ -12,7 +12,6 @@ const Home = ({
   onAdditemToCart,
   setChangeSearchValue,
   onAdditemToFavorites,
-  sneakersInCart,
   isLoading,
 }) => {
   const sneakerBlock = sneakers

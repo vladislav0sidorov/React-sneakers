@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../components/Card';
 import SkeletonSneakers from '../components/Card/SkeletonSneakers';
+import InfoOnFullPage from '../components/InfoOnFullPage';
 import AppContext from '../context';
 
 const Favorites = () => {
@@ -13,7 +14,6 @@ const Favorites = () => {
       {...objSneakersInFavorites}
       addSneakersToCart={(objSneakersToCart) => onAdditemToCart(objSneakersToCart)}
       additemToFavorites={(objSneakersToFavorites) => onAdditemToFavorites(objSneakersToFavorites)}
-      favorited={true}
     />
   ));
 

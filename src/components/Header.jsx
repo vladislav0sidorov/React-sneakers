@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Logo from '../assets/img/header/logo.png';
+import {useTotalCalc} from '../hooks/useTotalCalc'
 
 export const Header = ({ openCart }) => {
+  const {totalPrice} = useTotalCalc();
+
   return (
     <header className="header">
       <div className="header__container">
@@ -47,7 +50,7 @@ export const Header = ({ openCart }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>1250 руб.</span>
+              <span>{totalPrice} руб.</span>
             </div>
             <Link to="favorites">
               <div className="body-header__items-likes">

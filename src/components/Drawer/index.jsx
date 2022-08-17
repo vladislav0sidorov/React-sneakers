@@ -1,10 +1,39 @@
 import React from 'react';
+import axios from 'axios';
 
 import DeleteButton from '../../assets/img/hero/delete-btn.svg';
 import Arrow from '../../assets/img/hero/arrow.svg';
-import { CartEmprty } from '../CartEmpty';
+import EmptyBox from "../../assets/img/hero/cart/empty-box.png";
+import { CartInfo } from '../CartInfo';
 
-export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) => {
+import { useTotalCalc } from '../../hooks/useTotalCalc';
+
+const delay = () => new Promise((resolve) => setTimeout(resolve, 1000))
+
+export const Drawer = ({ closeCart, onDeleteItemInCart }) => {
+const [orderIsProcessed, setOrderIsProcessed] = React.useState(false)
+const [orderId, setOrderId] = React.useState(null)
+const {sneakersInCart, setSneakersInCart, totalPrice} = useTotalCalc()
+
+
+
+const onClickToOrder = async () => {
+  try {
+    setOrderIsProcessed(true)
+    const {data} = await axios.post('https://62d50aded4406e523551779b.mockapi.io/orders', {items: sneakersInCart})
+    setOrderId(data.id)
+    setSneakersInCart([])
+    for (let i = 0; i < sneakersInCart.length; i++) {
+      const items = sneakersInCart[i];
+      await axios.delete('https://62d50aded4406e523551779b.mockapi.io/cart/' +items.id )
+      await delay(100)
+    }
+  } catch (error) {
+    alert('Не удалось создать заказ! :(')
+  }
+  // доделать истрию с картом 
+}
+
   return (
     <div className="overlay">
       <div className="overlay-drawer">
@@ -30,7 +59,7 @@ export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) =
                         <div className="item-overlay__body">
                           <div className="item-overlay__body_title">
                             <h4>{objSneakersInCart.title}</h4>
-                            <p>{objSneakersInCart.price}руб.</p>
+                            <p>{objSneakersInCart.price} руб.</p>
                           </div>
                         </div>
                         <div className="item-overlay__delete-btn">
@@ -38,14 +67,13 @@ export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) =
                             onClick={() => onDeleteItemInCart(objSneakersInCart.id)}
                             key={objSneakersInCart.id}
                             src={DeleteButton}
-                            alt=""
+                            alt="DeleteButton"
                             className="delete-btn"
                           />
                         </div>
                       </div>
                     </div>
                   ))}
-                  ;
                 </div>
                 <div className="overlay-price">
                   <div className="overlay-price__body">
@@ -54,15 +82,15 @@ export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) =
                         <li>
                           <span>Итого:</span>
                           <div className="overlay-price__dashed"></div>
-                          <b>23241 руб.</b>
+                          <b>{totalPrice} руб.</b>
                         </li>
                         <li>
                           <span>Налог 5%:</span>
                           <div className="overlay-price__dashed"></div>
-                          <b>2324 руб.</b>
+                          <b>{Math.round(totalPrice * 0.05)} руб.</b>
                         </li>
                       </ul>
-                      <button className="overlay-price__green-button">
+                      <button onClick={onClickToOrder} className="overlay-price__green-button">
                         Оформить заказ <img src={Arrow} alt="Arrow" />
                       </button>
                     </div>
@@ -70,7 +98,7 @@ export const Drawer = ({ closeCart, onDeleteItemInCart, sneakersInCart = [] }) =
                 </div>
               </>
             ) : (
-              <CartEmprty closeCart={closeCart} />
+              <CartInfo closeCart={closeCart} title={orderIsProcessed ? 'Заказ оформлен' :'Корзина пуста' } text={orderIsProcessed ? `Ваш заказ № ${orderId} скоро будет передан курьерской доставке` :'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} image={EmptyBox}/>
             )}
           </div>
         </div>

@@ -13,14 +13,12 @@ const Card = ({
   imageUrl,
   addSneakersToCart,
   additemToFavorites,
-  favorited = false,
 }) => {
-  const { wasAddedInCart } = React.useContext(AppContext);
-  const [isLike, setIsLike] = React.useState(favorited);
+  const { wasAddedInCart, wasAddedInFavorites } = React.useContext(AppContext);
+  
 
   const clickToFavorites = () => {
     additemToFavorites({ price, title, imageUrl, id });
-    setIsLike(!isLike);
   };
 
   const clickToAdd = () => {
@@ -32,7 +30,7 @@ const Card = ({
       <img
         className="item-sneakers__button-like"
         onClick={clickToFavorites}
-        src={isLike ? CheckLike : Like}
+        src={wasAddedInFavorites(id) ? CheckLike : Like}
         alt="Like"
       />
       <div className="item-sneakers__image">
