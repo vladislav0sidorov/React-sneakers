@@ -1,0 +1,33 @@
+.empty-page {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 48vh;
+  justify-content: center;
+
+  &__body {
+  }
+}
+.body-empty-page {
+  &__emoji {
+    width: 70px;
+    height: 70px;
+    margin: 0 0 24px 0;
+  }
+  &__title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 0 0 12px 0;
+  }
+  &__text {
+    font-size: 16px;
+    line-height: 19px;
+    opacity: 0.4;
+    margin: 0 0 70px 0;
+  }
+  &__button {
+    display: inline;
+    width: 26%;
+  }
+}

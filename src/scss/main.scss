@@ -7,7 +7,8 @@
 // Секции
 @import "_header";
 @import "_hero";
-@import "overlay";
+@import "_overlay";
+@import "_infoOnEmptyPage";
 
 body {
   font-family: "Inter", sans-serif;
@@ -21,13 +22,16 @@ body {
 }
 
 .wrapper {
-  margin: 0 auto;
   max-width: 1030px;
   background: #ffffff;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
   border-radius: 20px;
+  margin: 50px auto;
 }
 .wrapper-container {
-  margin: 50px 0;
   padding: 45px 0;
+}
+
+#root {
+  overflow: auto;
 }

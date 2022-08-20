@@ -3,36 +3,36 @@ import axios from 'axios';
 
 import DeleteButton from '../../assets/img/hero/delete-btn.svg';
 import Arrow from '../../assets/img/hero/arrow.svg';
-import EmptyBox from "../../assets/img/hero/cart/empty-box.png";
+import EmptyBox from '../../assets/img/hero/cart/empty-box.png';
 import { CartInfo } from '../CartInfo';
 
 import { useTotalCalc } from '../../hooks/useTotalCalc';
 
-const delay = () => new Promise((resolve) => setTimeout(resolve, 1000))
+const delay = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
 export const Drawer = ({ closeCart, onDeleteItemInCart }) => {
-const [orderIsProcessed, setOrderIsProcessed] = React.useState(false)
-const [orderId, setOrderId] = React.useState(null)
-const {sneakersInCart, setSneakersInCart, totalPrice} = useTotalCalc()
+  const [orderIsProcessed, setOrderIsProcessed] = React.useState(false);
+  const [orderId, setOrderId] = React.useState(null);
+  const { sneakersInCart, setSneakersInCart, totalPrice } = useTotalCalc();
 
-
-
-const onClickToOrder = async () => {
-  try {
-    setOrderIsProcessed(true)
-    const {data} = await axios.post('https://62d50aded4406e523551779b.mockapi.io/orders', {items: sneakersInCart})
-    setOrderId(data.id)
-    setSneakersInCart([])
-    for (let i = 0; i < sneakersInCart.length; i++) {
-      const items = sneakersInCart[i];
-      await axios.delete('https://62d50aded4406e523551779b.mockapi.io/cart/' +items.id )
-      await delay(100)
+  const onClickToOrder = async () => {
+    try {
+      setOrderIsProcessed(true);
+      const { data } = await axios.post('https://62d50aded4406e523551779b.mockapi.io/orders', {
+        items: sneakersInCart,
+      });
+      setOrderId(data.id);
+      setSneakersInCart([]);
+      for (let i = 0; i < sneakersInCart.length; i++) {
+        const items = sneakersInCart[i];
+        await axios.delete('https://62d50aded4406e523551779b.mockapi.io/cart/' + items.id);
+        await delay(100);
+      }
+    } catch (error) {
+      alert('Не удалось создать заказ! :(');
     }
-  } catch (error) {
-    alert('Не удалось создать заказ! :(')
-  }
-  // доделать истрию с картом 
-}
+    setOrderIsProcessed(false);
+  };
 
   return (
     <div className="overlay">
@@ -90,7 +90,10 @@ const onClickToOrder = async () => {
                           <b>{Math.round(totalPrice * 0.05)} руб.</b>
                         </li>
                       </ul>
-                      <button onClick={onClickToOrder} className="overlay-price__green-button">
+                      <button
+                        disabled={orderIsProcessed}
+                        onClick={onClickToOrder}
+                        className="overlay-price__green-button">
                         Оформить заказ <img src={Arrow} alt="Arrow" />
                       </button>
                     </div>
@@ -98,7 +101,17 @@ const onClickToOrder = async () => {
                 </div>
               </>
             ) : (
-              <CartInfo closeCart={closeCart} title={orderIsProcessed ? 'Заказ оформлен' :'Корзина пуста' } text={orderIsProcessed ? `Ваш заказ № ${orderId} скоро будет передан курьерской доставке` :'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'} image={EmptyBox}/>
+              <CartInfo
+                orderIsProcessed={orderIsProcessed}
+                closeCart={closeCart}
+                title={orderIsProcessed ? 'Заказ оформлен' : 'Корзина пуста'}
+                text={
+                  orderIsProcessed
+                    ? `Ваш заказ № ${orderId} скоро будет передан курьерской доставке`
+                    : 'Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.'
+                }
+                image={EmptyBox}
+              />
             )}
           </div>
         </div>

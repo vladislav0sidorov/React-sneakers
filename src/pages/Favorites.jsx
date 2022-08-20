@@ -1,8 +1,10 @@
 import React from 'react';
 import Card from '../components/Card';
 import SkeletonSneakers from '../components/Card/SkeletonSneakers';
-import InfoOnFullPage from '../components/InfoOnFullPage';
+import InfoOnEmptyPage from '../components/InfoOnEmptyPage';
 import AppContext from '../context';
+
+import CryEmoji from '../assets/img/emoji/cry.png';
 
 const Favorites = () => {
   const { sneakersInFavorites, onAdditemToFavorites, onAdditemToCart, isLoading } =
@@ -17,7 +19,7 @@ const Favorites = () => {
     />
   ));
 
-  const skeletons = [...new Array(4)].map((_, index) => <SkeletonSneakers key={index} />);
+  const skeletons = [...new Array(8)].map((_, index) => <SkeletonSneakers key={index} />);
 
   return (
     <main className="main">

@@ -14,7 +14,9 @@ export const CartInfo = ({ closeCart, title, text, image }) => {
       <div className="overlay-body__text">
         <p>{text}</p>
       </div>
-      <button onClick={closeCart} className="overlay-price__green-button overlay-body__back-button">
+      <button
+        onClick={closeCart}
+        className="overlay-price__green-button overlay-body__back-button overlay-body__loading">
         Вернуться назад <img src={Arrow} alt="Arrow" />
       </button>
     </div>
